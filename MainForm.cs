@@ -38,7 +38,51 @@ namespace USB_Stealer
             ConsoleSendOut("窗口初始化完毕。");
 
             // 配置读取
-            
+            try
+            {
+                string opitionTxtPath = @"\UsbStealer.opt";
+                FileStream opitionTxtStream;
+                byte[] bytes;
+                if (!File.Exists(opitionTxtPath))
+                {
+                    // 配置文件不存在，创建默认配置文件
+                    opitionTxtStream = new FileStream(opitionTxtPath, FileMode.Create, FileAccess.Write);
+                    string ExtListString = string.Empty;
+                    ExtListString = string.Join("-", DEF_EXT);
+                    string message = $"PathTo={DEF_PATH}\nExtList={ExtListString}";
+                    bytes = Encoding.UTF8.GetBytes(message);
+                    opitionTxtStream.Write(bytes, 0, bytes.Length);
+                    opitionTxtStream.Flush();
+                    opitionTxtStream.Close();
+                }
+                // 配置文件存在，读取配置文件
+                opitionTxtStream = new FileStream(opitionTxtPath, FileMode.Open, FileAccess.Read);
+                bytes = new byte[opitionTxtStream.Length];
+                opitionTxtStream.Read(bytes, 0, bytes.Length);
+                string opitionTxt = Encoding.UTF8.GetString(bytes);
+                string[] opitionTxtList = opitionTxt.Split('\n');
+                foreach (string opitionItem in opitionTxtList)
+                {
+                    // 参数映射变量   参数 -> 变量
+                    string[] opition = opitionItem.Split('=');
+                    switch (opition[0])
+                    {
+                        case "PathTo":
+                            Opition.pathTo = opition[1];
+                            break;
+                        case "ExtList":
+                            Opition.extList = opition[1].Split(';');
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ConsoleSendOut($"读取配置失败：{ex}");
+            }
 
             ShowSettingToTextBox();
 
@@ -339,7 +383,7 @@ namespace USB_Stealer
         private void ShowSettingToTextBox()
         {
             string extListString = string.Empty;
-            extListString = string.Join(';'.ToString(),Opition.extList);
+            extListString = string.Join(';'.ToString(), Opition.extList);
             PathTextBox.Text = Opition.pathTo;
             ExtTextBox.Text = extListString;
 
@@ -348,24 +392,6 @@ namespace USB_Stealer
 
             ExtTextBox.Font = new Font(ExtTextBox.Font, FontStyle.Regular);
             ExtTextBox.ForeColor = Color.Black;
-        }
-
-        private static bool TestforKeyExist()
-        {
-            try
-            {
-                RegistryKey LocalMachine = Registry.LocalMachine;
-                RegistryKey UsbStealerKey;
-
-                UsbStealerKey = LocalMachine.OpenSubKey("software\\UsbStealer", true);
-                Opition.pathTo = UsbStealerKey.GetValue("PathTo").ToString();
-                Opition.extList = UsbStealerKey.GetValue("ExtList").ToString().Split(';');
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         #endregion
