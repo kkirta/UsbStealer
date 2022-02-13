@@ -98,10 +98,7 @@ namespace USB_Stealer
 
         #region USB Steler 文件扫描实现代码
         /// <summary>
-        /// USB Stealer 实现区域，参考链接如下： 
-        /// https://www.cnblogs.com/rr163/p/4259975.html ， 
-        /// https://blog.csdn.net/wangzhichunnihao/article/details/79296100 ，
-        /// https://blog.csdn.net/Sayesan/article/details/84340588 。
+        /// USB Stealer 实现区域
         /// 本软件及其代码仅供学习交流使用
         /// </summary>
 
@@ -250,8 +247,6 @@ namespace USB_Stealer
         }
 
         //清理空文件夹
-        // 参考 https://codeleading.com/article/2652781042/ https://blog.csdn.net/BombZhang/article/details/88991902 ， 网上的搜索结果大部分都是互相抄（甚至连缩进和空格都抄没了），抄就算了，结果还不能处理多层套娃的空文件夹（最多支持2层，再多的就不会清理了）
-        // 这篇文章写的可以正常清理空文件夹，好顶！（不过这个var的使用量还是我目前见过最多的（（（     （2022/2/11 21:32）
         void DeleteEmptyFolders(string parentFolder)
         {
             var dir = new DirectoryInfo(parentFolder);
