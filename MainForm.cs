@@ -363,6 +363,27 @@ namespace USB_Stealer
             ConsoleSendOut("停止监视");
         }
 
+        // 主窗体最小化效果
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized) //判断是否最小化
+            {
+                this.ShowInTaskbar = false; //不显示在系统任务栏
+                notifyIcon.Visible = true; //托盘图标可见
+            }
+        }
+
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.ShowInTaskbar = true; //显示在系统任务栏
+                this.WindowState = FormWindowState.Normal; //还原窗体
+                notifyIcon.Visible = false; //托盘图标隐藏
+            }
+        }
+
+
         #endregion
 
 
