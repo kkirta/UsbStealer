@@ -25,6 +25,8 @@ A U-Disk spy progarm for myself learning to C# and .NET framework.
 
 ~~之后会考虑添加快捷键隐藏，实现无影无踪。~~
 
+~~想到或许有人想找个参考就顺手开源了\~\~（应该没人想学我这堆稀烂的作品吧）~~
+
 ***
 
 __这是个最烂实践，包括 readme.md__
