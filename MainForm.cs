@@ -40,7 +40,7 @@ namespace USB_Stealer
             // 配置读取
             try
             {
-                string opitionTxtPath = @"\UsbStealer.opt";
+                string opitionTxtPath = @"UsbStealer.opt";
                 FileStream opitionTxtStream;
                 byte[] bytes;
                 if (!File.Exists(opitionTxtPath))
@@ -48,7 +48,7 @@ namespace USB_Stealer
                     // 配置文件不存在，创建默认配置文件
                     opitionTxtStream = new FileStream(opitionTxtPath, FileMode.Create, FileAccess.Write);
                     string ExtListString = string.Empty;
-                    ExtListString = string.Join("-", DEF_EXT);
+                    ExtListString = string.Join(";", DEF_EXT);
                     string message = $"PathTo={DEF_PATH}\nExtList={ExtListString}";
                     bytes = Encoding.UTF8.GetBytes(message);
                     opitionTxtStream.Write(bytes, 0, bytes.Length);
@@ -77,19 +77,21 @@ namespace USB_Stealer
                             break;
                     }
                 }
+                opitionTxtStream.Close();
 
             }
             catch (Exception ex)
             {
                 ConsoleSendOut($"读取配置失败：{ex}");
+                ConsoleSendOut($"将采用默认配置...");
+
+                Opition.pathTo = DEF_PATH;
+                Opition.extList = DEF_EXT;
             }
 
             ShowSettingToTextBox();
 
-            Opition.pathTo = PATHTEXT;
-            Opition.extList = EXTTEXT.Split(';');
-
-            ConsoleSendOut($"载入配置完毕：\n         输出路径：{Opition.pathTo}\n           选定扩展名：{Opition.extList}");
+            ConsoleSendOut($"载入配置完毕：\n         输出路径：{Opition.pathTo}\n           选定扩展名：{Opition.extList2String()}");
             ConsoleSendOut("软件版本：Alpha");
             ConsoleSendOut("欢迎使用 UsbStelerPlatinum");
 
@@ -295,13 +297,14 @@ namespace USB_Stealer
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            
+            // 退出
             System.Environment.Exit(0);
         }
 
         private void SettingButton_Click(object sender, EventArgs e)
         {
-           ApplySetting();
+            ApplySetting();
+            Opition2Files();
         }
 
 
@@ -343,6 +346,7 @@ namespace USB_Stealer
                 ExtTextBox.Font = new Font(PathTextBox.Font, FontStyle.Italic);
                 ExtTextBox.ForeColor = Color.DarkGray;
                 ExtTextBox.Text = EXTTEXT;
+
             }
         }
 
@@ -368,7 +372,15 @@ namespace USB_Stealer
             public static string pathTo { get; set; }
             public static string[] extList { get; set; }
 
+            public static string extList2String()
+            {
+                string extListString = string.Empty;
+                extListString = string.Join(";",extList);
+                return extListString;
+            }
+
             public static bool monitor { get; set; }
+
         }
 
         // 应用设置参数
@@ -392,6 +404,34 @@ namespace USB_Stealer
 
             ExtTextBox.Font = new Font(ExtTextBox.Font, FontStyle.Regular);
             ExtTextBox.ForeColor = Color.Black;
+        }
+
+        // 输出配置
+        private void Opition2Files()
+        {
+            try{
+                // 我是傻逼，这里看了大半天没看出来一个超级简单的问题
+                string opitionTxtPath = @"UsbStealer.opt";
+                FileStream opitionTxtStream = new FileStream(opitionTxtPath, FileMode.OpenOrCreate, FileAccess.Write);
+                string ExtListString = string.Empty;
+                ExtListString = string.Join(";", Opition.extList);
+                string message = $"PathTo={Opition.pathTo}\nExtList={ExtListString}";
+                byte[] bytes = Encoding.UTF8.GetBytes(message);
+                opitionTxtStream.Write(bytes, 0, bytes.Length);
+                opitionTxtStream.Flush();
+                opitionTxtStream.Close();
+            }
+            catch(Exception ex)
+            {
+                ConsoleSendOut($"保存配置发生错误：{ex}");
+            }
+        }
+
+        // 重写关闭窗口的函数
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // 关闭窗口
+            base.OnClosing(e);
         }
 
         #endregion
