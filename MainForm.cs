@@ -18,6 +18,7 @@ namespace USB_Stealer
         private const string PATHTEXT = "目标路径";
         private const string EXTTEXT = "扩展名列表";
         private const string DEF_PATH = "D:\\1UsbStealerPlatinum";
+        private const string VERSION = "Platinum 0.0.1";
         private readonly string[] DEF_EXT = new string[] { ".doc", ".docx", "mp3" };
         #endregion
 
@@ -89,7 +90,7 @@ namespace USB_Stealer
             ShowSettingToTextBox();
 
             ConsoleSendOut($"载入配置完毕：\n         输出路径：{Opition.pathTo}\n           选定扩展名：{Opition.extList2String()}");
-            ConsoleSendOut("软件版本：Alpha");
+            ConsoleSendOut($"软件版本：{VERSION}");
             ConsoleSendOut("欢迎使用 UsbStelerPlatinum");
 
             Opition.monitor = true;
