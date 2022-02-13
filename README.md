@@ -32,3 +32,17 @@ A U-Disk spy progarm for myself learning to C# and .NET framework.
 ***
 
 __这是个最烂实践，包括 readme.md__
+
+
+***
+
+引用：
+
+eva-icons v1.1.3 release
+
+引用来源：[eva-icons](https://github.com/akveo/eva-icons "超棒的开源图标包")
+
+eva-icons版权所有：Copyright (c) 2018 Akveo.
+
+MIT协议
+
