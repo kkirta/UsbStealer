@@ -172,7 +172,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 132F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(277, 199);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(302, 215);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // ExtTextBox
@@ -180,9 +180,9 @@
             this.ExtTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ExtTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ExtTextBox.ForeColor = System.Drawing.Color.DarkGray;
-            this.ExtTextBox.Location = new System.Drawing.Point(3, 36);
+            this.ExtTextBox.Location = new System.Drawing.Point(3, 52);
             this.ExtTextBox.Name = "ExtTextBox";
-            this.ExtTextBox.Size = new System.Drawing.Size(271, 26);
+            this.ExtTextBox.Size = new System.Drawing.Size(296, 26);
             this.ExtTextBox.TabIndex = 1;
             this.ExtTextBox.Text = "扩展名列表";
             this.ExtTextBox.Click += new System.EventHandler(this.ExtTestBox_Click);
@@ -195,7 +195,7 @@
             this.PathTextBox.ForeColor = System.Drawing.Color.DarkGray;
             this.PathTextBox.Location = new System.Drawing.Point(3, 3);
             this.PathTextBox.Name = "PathTextBox";
-            this.PathTextBox.Size = new System.Drawing.Size(271, 26);
+            this.PathTextBox.Size = new System.Drawing.Size(296, 26);
             this.PathTextBox.TabIndex = 0;
             this.PathTextBox.Text = "目标路径";
             this.PathTextBox.Click += new System.EventHandler(this.PathTextBox_Click);
