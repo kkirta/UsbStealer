@@ -33,6 +33,9 @@ namespace USB_Stealer
         // 窗口初始化
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // 启动时自动最小化
+            this.WindowState = FormWindowState.Minimized;
+
             ConsoleSendOut("窗口初始化完毕。");
 
             // 配置读取
